@@ -6,7 +6,7 @@ r2 = sr.Recognizer()
 r3 = sr.Recognizer()
 
 while True:
-    with sr.Microphone() as source:
+    with sr.Microphone(device_index=0) as source:
         print('speak now')
         audio = r3.listen(source)
 
@@ -19,8 +19,10 @@ while True:
                 get = get.replace(txt + " ", '')
                 txt = txt.lower()
             if(txt == "pikachu play"):
-                subprocess.call(["killall", "chrome"])
+                subprocess.Popen(["killall", "chrome"])
                 subprocess.Popen(["node", "bot.js", get])
+            if(get == "stop"):
+                subprocess.Popen(["killall", "chrome"])
         except sr.UnknownValueError as e:
             print(e)
         except sr.RequestError as e:
