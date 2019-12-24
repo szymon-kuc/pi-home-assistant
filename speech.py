@@ -1,12 +1,20 @@
 import speech_recognition as sr
 import subprocess
+from weather import get_weather
+
+API = "mnoaAGSAAtyozykbpx6Iz0iyf5XOX1qs"
+LOCATION_ID = 275789
+
+temperature, humidity, wind_bearing, wind_speed, uv_index, cloud_cover, pressure, precipitation, raw \
+    = get_weather(API, LOCATION_ID)
+#print("Temperatura Zabrze: " + str(temperature) + "°C")
 
 rl = sr.Recognizer()
 r2 = sr.Recognizer()
 r3 = sr.Recognizer()
 
 def kill_process():
-    subprocess.Popen(["killall", "chrome"])
+    subprocess.call(["killall", "chrome"])
 
 def tasks(text):
     pikachu = text.split()[0]
@@ -21,6 +29,10 @@ def tasks(text):
             subprocess.Popen(["node", "bot.js", content])
         if(commmand == "stop"):
             kill_process()
+        if(commmand == "what's"):
+            if(content == "the weather now"):
+                print("Temperatura Zabrze: " + str(temperature) + "°C")
+                
 
 while True:
     with sr.Microphone() as source:
