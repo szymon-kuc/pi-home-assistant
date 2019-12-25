@@ -1,6 +1,11 @@
 import json
 import time
 import urllib.request
+from gtts import gTTS 
+import os
+
+API = "mnoaAGSAAtyozykbpx6Iz0iyf5XOX1qs"
+LOCATION_ID = 275789
 
 def get_weather(api, location_id):
     url = 'http://dataservice.accuweather.com/currentconditions/v1/%s?apikey=%s&details=true' % (location_id, api)
@@ -22,3 +27,13 @@ def get_weather(api, location_id):
 
 
 timestamp = time.time()
+
+
+def weather():
+    temperature, humidity, wind_bearing, wind_speed, uv_index, cloud_cover, pressure, precipitation, raw \
+    = get_weather(API, LOCATION_ID)
+
+    answer = "It’s" + str(temperature) + "cold and windy outside. It's around 2.5 degrees"
+    speech = gTTS(text = answer, lang = 'en', slow = False)
+    speech.save("text.mp3")
+    os.system("mpg123 text.mp3")

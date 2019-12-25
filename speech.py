@@ -1,17 +1,8 @@
 import speech_recognition as sr
 import subprocess
-from weather import get_weather
+from weather import weather
 
-API = "mnoaAGSAAtyozykbpx6Iz0iyf5XOX1qs"
-LOCATION_ID = 275789
-
-temperature, humidity, wind_bearing, wind_speed, uv_index, cloud_cover, pressure, precipitation, raw \
-    = get_weather(API, LOCATION_ID)
-#print("Temperatura Zabrze: " + str(temperature) + "°C")
-
-rl = sr.Recognizer()
-r2 = sr.Recognizer()
-r3 = sr.Recognizer()
+r1 = sr.Recognizer()
 
 def kill_process():
     subprocess.call(["killall", "chrome"])
@@ -26,20 +17,21 @@ def tasks(text):
     if(pikachu == "pikachu"):
         if(commmand == "play"):
             kill_process()
-            subprocess.Popen(["node", "bot.js", content])
+            subprocess.Popen(["node", "player.js", content])
         if(commmand == "stop"):
             kill_process()
         if(commmand == "what's"):
             if(content == "the weather now"):
-                print("Temperatura Zabrze: " + str(temperature) + "°C")
+                weather()
+                
                 
 
 while True:
     with sr.Microphone() as source:
         print('speak now')
-        audio = r3.listen(source)
+        audio = r1.listen(source)
         try:
-            get = r3.recognize_google(audio)
+            get = r1.recognize_google(audio)
             print(get)
             if(len(get.split()) >= 2):
                 tasks(get)    
