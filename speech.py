@@ -1,6 +1,8 @@
 import speech_recognition as sr
 import subprocess
-from weather import weather
+from weather import weather_commands
+import datetime
+from yt import play
 
 r1 = sr.Recognizer()
 
@@ -17,14 +19,12 @@ def tasks(text):
     if(pikachu == "pikachu"):
         if(commmand == "play"):
             kill_process()
-            subprocess.Popen(["node", "player.js", content])
+            play(content)
         if(commmand == "stop"):
             kill_process()
-        if(commmand == "what's"):
-            if(content == "the weather now"):
-                weather()
-                
-                
+        if(commmand == "what"):
+            if("weather" in content):
+                weather_commands(content)
 
 while True:
     with sr.Microphone() as source:

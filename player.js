@@ -6,17 +6,12 @@ let txt = process.argv[2];
         try {
             const yt = await browser.newPage();
         
-            await yt.goto('https://youtube.com/', {waitUntil: 'networkidle2'});
+            await yt.goto(('https://youtube.com/watch?v='+txt), {waitUntil: 'networkidle2'});
             await yt.setDefaultNavigationTimeout(0); 
-        
-            let search = "#search";
-        
-            await yt.waitForSelector(search);
-            await yt.click(search);
-            await yt.keyboard.type(txt);
-            await yt.click("#search-icon-legacy");
-            await yt.waitForSelector(".ytd-video-renderer");
-            await yt.click(".ytd-video-renderer:first-child");
+
+            await yt.waitForSelector(".ytp-play-button");
+            await yt.click(".ytp-play-button");
+            
             await yt.waitForSelector(".ended-mode", { timeout: 0});
             await browser.close();
         
