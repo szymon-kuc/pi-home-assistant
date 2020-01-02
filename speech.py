@@ -45,7 +45,7 @@ def tasks(text):
             kill_process()
         elif("weather" in content):
             weather_commands(content)
-        elif(command == "how" or command == "where" or "lyrics" in content or (command == "what" and "weather" not in content)):
+        elif(command == "how" or command == "when" or command == "who" or command == "where" or "lyrics" in content or (command == "what" and "weather" not in content)):
             kill_process()
             subprocess.call(["node", "google_search.js", (command + " " + content)])
             f = open("Output.txt", "r")
